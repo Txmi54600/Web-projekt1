@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kő papír olló</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Kő - Papír - Olló</h1>
+    
+    <div class="choices">
+        <button onclick="playGame('kő')"><img src="ko.jpg" alt="kő" width="100"></button>
+        <button onclick="playGame('papír')"><img src="papir.jpg" alt="papír" width="100"></button>
+        <button onclick="playGame('olló')"><img src="ollo.jpg" alt="olló" width="100"></button>
+    </div>
+    </div>
+
+    <div id="playerDisplay">Játékos: </div>
+    <div id="computerDisplay">A gép: </div>
+    <div id="resultDisplay"></div>
+
+    <div class="scoreDisplay">Nyert játszmák: 
+        <span id="playerScoreDisplay">0</span>
+    </div>
+
+    <div class="scoreDisplay">Vesztett játszmák: 
+        <span id="computerScoreDisplay">0</span>
+    </div>
+
+    <div class="scoreDisplay">Döntetlenek: 
+        <span id="tiesDisplay">0</span>
+    </div>
+
+    <script>
+        const choices = ["kő", "papír", "olló"];
+        
+        let playerScore = 0;
+        let computerScore = 0;
+        let tie = 0;
+
+        function playGame(playerChoice){
+
+            const computerChoice = choices[Math.floor(Math.random() * 3)];
+            let result = "";
+
+            if(playerChoice === computerChoice){
+                result = "DÖNTETLEN";
+            }
+            else{
+                switch(playerChoice){
+                    case "kő":
+                        result = (computerChoice === "olló") ? "NYERTÉL" : "VESZTETTÉL";
+                        break;
+                    case "papír":
+                        result = (computerChoice === "kő") ? "NYERTÉL" : "VESZTETTÉL";
+                        break;
+                    case "olló":
+                        result = (computerChoice === "papír") ? "NYERTÉL" : "VESZTETTÉL";
+                        break;
+                }
+            }
+            
+            playerDisplay.textContent = `Játékos: ${playerChoice}`;
+            computerDisplay.textContent = `A gép: ${computerChoice}`;
+            resultDisplay.textContent = result;
+            
+            resultDisplay.classList.remove("greenText", "redText" , "greyText");
+
+            switch(result){
+                case "NYERTÉL":
+                    resultDisplay.classList.add("greenText");
+                    playerScore++;
+                    playerScoreDisplay.textContent = playerScore;
+                    break;
+                case "VESZTETTÉL":
+                    resultDisplay.classList.add("redText");
+                    computerScore++;
+                    computerScoreDisplay.textContent = computerScore;
+                    break;
+                case "DÖNTETLEN":
+                    resultDisplay.classList.add("greyText");
+                    tie++;
+                    tiesDisplay.textContent = tie;
+                    break;
+            }
+        }
+
+    </script>
+</body>
+</html>
